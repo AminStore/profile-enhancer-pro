@@ -6,6 +6,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { projects, projectFilters, type Project } from "@/data";
 import { useI18n } from "@/lib/i18n";
+import { SmartImage } from "@/components/ui/SmartImage";
+import { IMAGE_SIZES } from "@/lib/image";
+
 
 function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
   return (
