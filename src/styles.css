@@ -99,7 +99,41 @@
   }
 }
 
+@keyframes skeleton-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 /* Utility definitions */
+
+/* Shimmering placeholder used by SmartImage and the skeleton components. */
+@utility skeleton-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--muted) 70%, transparent) 20%,
+    color-mix(in oklab, var(--foreground) 8%, transparent) 40%,
+    color-mix(in oklab, var(--muted) 70%, transparent) 60%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-sweep 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none;
+  }
+}
+
+/* Defer offscreen section rendering without affecting scroll height. */
+@utility defer-paint {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+
 @utility glass {
   background: color-mix(in oklab, var(--card) 88%, transparent);
   border: 1px solid color-mix(in oklab, var(--border) 100%, transparent);
