@@ -26,19 +26,19 @@ function ProjectCard({ project, index = 0 }: { project: Project; index?: number 
           {project.category}
         </span>
       </div>
-      <div className="relative h-44 overflow-hidden rounded-2xl bg-black/20">
-        {project.image ? (
-          <img
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div
-            className="h-full w-full"
-            style={{ background: project.gradient || "linear-gradient(135deg, oklch(0.6 0.18 30), oklch(0.45 0.12 320))" }}
-          />
-        )}
+      <div className="relative h-44 overflow-hidden rounded-2xl">
+        <SmartImage
+          src={project.image}
+          alt={`${project.title} preview`}
+          width={384}
+          height={176}
+          sizes={IMAGE_SIZES.card}
+          priority={index < 3}
+          fallbackStyle={project.gradient}
+          className="size-full"
+          imgClassName="transition-transform duration-300 group-hover:scale-105"
+        />
+
         <div className="absolute inset-0 bg-black/20 transition-opacity group-hover:opacity-0" />
         <span className="absolute left-4 top-4 rounded-full bg-black/40 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
           {project.category}
