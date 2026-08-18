@@ -4,18 +4,18 @@ import { cn } from "@/lib/utils";
 
 interface SmartImageProps {
   /** Logical image path from the data layer. */
-  src?: string;
+  src?: string | undefined;
   alt: string;
   /** Intrinsic size — reserves space so the layout never shifts. */
-  width?: number;
-  height?: number;
-  sizes?: string;
+  width?: number | undefined;
+  height?: number | undefined;
+  sizes?: string | undefined;
   /** Above-the-fold images should be `true`: eager + high priority. */
-  priority?: boolean;
-  className?: string;
-  imgClassName?: string;
+  priority?: boolean | undefined;
+  className?: string | undefined;
+  imgClassName?: string | undefined;
   /** Shown while loading and when the image is missing or fails. */
-  fallbackStyle?: string;
+  fallbackStyle?: string | undefined;
 }
 
 /**
