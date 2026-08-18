@@ -1,4 +1,6 @@
 import type { Project } from "@/data/projects";
+import { SmartImage } from "@/components/ui/SmartImage";
+import { IMAGE_SIZES } from "@/lib/image";
 
 interface ProjectHeroProps {
   project: Project;
@@ -7,23 +9,17 @@ interface ProjectHeroProps {
 
 export function ProjectHero({ project, children }: ProjectHeroProps) {
   return (
-    <div className="relative h-96 overflow-hidden bg-black/20 md:h-[500px]">
-      {project.image ? (
-        <img
-          src={project.image}
-          alt={project.title}
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        <div
-          className="h-full w-full"
-          style={{
-            background:
-              project.gradient ||
-              "linear-gradient(135deg, oklch(0.6 0.18 30), oklch(0.45 0.12 320))",
-          }}
-        />
-      )}
+    <div className="relative h-96 overflow-hidden md:h-[500px]">
+      <SmartImage
+        src={project.image}
+        alt={`${project.title} screenshot`}
+        width={1280}
+        height={500}
+        sizes={IMAGE_SIZES.hero}
+        priority
+        fallbackStyle={project.gradient}
+        className="size-full"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/70" />
       {children}
     </div>
