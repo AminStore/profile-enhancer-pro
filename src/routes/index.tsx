@@ -8,6 +8,7 @@ import { Projects } from "@/components/sections/Projects";
 import { ExperiencePreview } from "@/components/sections/home/ExperiencePreview";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { ContactCta } from "@/components/sections/home/ContactCta";
+import heroIso from "@/assets/hero-iso.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,7 +29,11 @@ export const Route = createFileRoute("/")({
           "Building marketplaces that scale to millions — multi-vendor, B2C, B2B, and custom commerce systems.",
       },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      // LCP element: fetch the hero illustration in parallel with the CSS.
+      { rel: "preload", as: "image", href: heroIso, fetchPriority: "high" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -55,12 +60,25 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <AboutPreview />
-        <SkillsPreview />
-        <Projects />
-        <ExperiencePreview />
-        <Testimonials />
-        <ContactCta />
+        {/* defer-paint skips rendering/layout work for offscreen sections. */}
+        <div className="defer-paint">
+          <AboutPreview />
+        </div>
+        <div className="defer-paint">
+          <SkillsPreview />
+        </div>
+        <div className="defer-paint">
+          <Projects />
+        </div>
+        <div className="defer-paint">
+          <ExperiencePreview />
+        </div>
+        <div className="defer-paint">
+          <Testimonials />
+        </div>
+        <div className="defer-paint">
+          <ContactCta />
+        </div>
       </main>
       <Footer />
     </div>
