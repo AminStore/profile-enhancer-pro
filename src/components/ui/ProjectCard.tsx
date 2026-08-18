@@ -169,28 +169,28 @@ export function Badge({ children, variant = "gold" }: BadgeProps) {
 interface ProjectCardImageProps {
   project: Project;
   compact?: boolean;
+  /** First few cards are close to the fold — load them eagerly. */
+  priority?: boolean;
 }
 
-export function ProjectCardImage({ project, compact = false }: ProjectCardImageProps) {
+export function ProjectCardImage({
+  project,
+  compact = false,
+  priority = false,
+}: ProjectCardImageProps) {
   return (
-    <div className={`relative overflow-hidden bg-black/20 ${compact ? "h-36" : "h-48"}`}>
-      {project.image ? (
-        <img
-          src={project.image}
-          alt={`${project.title} preview`}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-        />
-      ) : (
-        <div
-          className="h-full w-full"
-          style={{
-            background:
-              project.gradient ||
-              "linear-gradient(135deg, oklch(0.6 0.18 30), oklch(0.45 0.12 320))",
-          }}
-        />
-      )}
+    <div className={`relative overflow-hidden ${compact ? "h-36" : "h-48"}`}>
+      <SmartImage
+        src={project.image}
+        alt={`${project.title} preview`}
+        width={compact ? 220 : 384}
+        height={compact ? 144 : 192}
+        sizes={compact ? IMAGE_SIZES.thumb : IMAGE_SIZES.card}
+        priority={priority}
+        fallbackStyle={project.gradient}
+        className="size-full"
+        imgClassName="transition-transform duration-500 group-hover:scale-[1.06]"
+      />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
       <span className="absolute left-3 top-3 rounded-full border border-border/40 bg-background/70 px-3 py-1 text-[11px] font-semibold text-foreground backdrop-blur">
         {project.category}
@@ -198,6 +198,7 @@ export function ProjectCardImage({ project, compact = false }: ProjectCardImageP
     </div>
   );
 }
+
 
 interface TechStackPreviewProps {
   techs: string[];
