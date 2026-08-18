@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
+import { PageSkeleton } from "@/components/ui/Skeletons";
 
 const stats = [
   { value: "$1B+", label: "GMV shipped" },
@@ -53,6 +54,7 @@ export const Route = createFileRoute("/about")({
     links: [{ rel: "canonical", href: "/about" }],
   }),
   component: AboutPage,
+  pendingComponent: PageSkeleton,
 });
 
 function AboutPage() {

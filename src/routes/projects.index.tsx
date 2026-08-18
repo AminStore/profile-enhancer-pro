@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { projects, projectFilters } from "@/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectCard, type ProjectView } from "@/components/ui/ProjectCard";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ProjectGridSkeleton, PageSkeleton } from "@/components/ui/Skeletons";
 import {
   Search,
   ChevronLeft,
@@ -45,6 +46,7 @@ export const Route = createFileRoute("/projects/")({
     links: [{ rel: "canonical", href: "/projects" }],
   }),
   component: ProjectsPage,
+  pendingComponent: PageSkeleton,
 });
 
 const SORTS = [
@@ -60,6 +62,10 @@ type SortValue = (typeof SORTS)[number]["value"];
 export function ProjectsPage() {
   const [filter, setFilter] = useState<(typeof projectFilters)[number]>("All");
   const [searchQuery, setSearchQuery] = useState("");
+  // Keeps typing responsive: filtering runs at low priority and the grid shows
+  // skeletons for the frame(s) where results are still catching up.
+  const deferredQuery = useDeferredValue(searchQuery);
+  const isFiltering = deferredQuery !== searchQuery;
   const [sort, setSort] = useState<SortValue>("default");
   const [view, setView] = useState<ProjectView>("grid");
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,7 +81,7 @@ export function ProjectsPage() {
   const filtered = useMemo(() => {
     let result = filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
-    const query = searchQuery.trim().toLowerCase();
+    const query = deferredQuery.trim().toLowerCase();
     if (query) {
       result = result.filter(
         (p) =>
@@ -94,7 +100,7 @@ export function ProjectsPage() {
       sorted.sort((a, b) => a.category.localeCompare(b.category) || a.title.localeCompare(b.title));
     if (sort === "tech") sorted.sort((a, b) => b.tech.length - a.tech.length);
     return sorted;
-  }, [filter, searchQuery, sort]);
+  }, [filter, deferredQuery, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
 
@@ -247,7 +253,9 @@ export function ProjectsPage() {
               )}
             </div>
 
-            {paginatedProjects.length > 0 ? (
+            {isFiltering ? (
+              <ProjectGridSkeleton count={perPage} view={view} />
+            ) : paginatedProjects.length > 0 ? (
               <>
                 <motion.div
                   layout

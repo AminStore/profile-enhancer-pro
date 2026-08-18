@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { Experience } from "@/components/sections/Experience";
 import { experience } from "@/data";
+import { PageSkeleton } from "@/components/ui/Skeletons";
 
 export const Route = createFileRoute("/experience")({
   head: () => ({
@@ -28,6 +29,7 @@ export const Route = createFileRoute("/experience")({
     links: [{ rel: "canonical", href: "/experience" }],
   }),
   component: ExperiencePage,
+  pendingComponent: PageSkeleton,
 });
 
 function ExperiencePage() {

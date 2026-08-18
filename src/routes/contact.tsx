@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { Contact } from "@/components/sections/Contact";
+import { PageSkeleton } from "@/components/ui/Skeletons";
 
 const channels = [
   { Icon: Mail, label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/contact")({
     links: [{ rel: "canonical", href: "/contact" }],
   }),
   component: ContactPage,
+  pendingComponent: PageSkeleton,
 });
 
 function ContactPage() {

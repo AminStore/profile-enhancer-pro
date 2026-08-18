@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { skillGroups } from "@/data";
+import { PageSkeleton } from "@/components/ui/Skeletons";
 
 export const Route = createFileRoute("/skills")({
   head: () => ({
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/skills")({
     links: [{ rel: "canonical", href: "/skills" }],
   }),
   component: SkillsPage,
+  pendingComponent: PageSkeleton,
 });
 
 function SkillsPage() {

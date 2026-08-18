@@ -7,6 +7,7 @@ import { TechStack } from "@/components/ui/TechStack";
 import { Badge } from "@/components/ui/ProjectCard";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ProjectDetailSkeleton } from "@/components/ui/Skeletons";
 
 export const Route = createFileRoute("/projects/$id")({
   head: ({ params }) => {
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/projects/$id")({
     };
   },
   component: ProjectDetail,
+  pendingComponent: ProjectDetailSkeleton,
 });
 
 export function ProjectDetail() {
