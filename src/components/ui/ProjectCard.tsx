@@ -26,7 +26,7 @@ export function ProjectCard({ project, index, view = "grid" }: ProjectCardProps)
       transition={{ duration: 0.35, delay: Math.min(index, 6) * 0.04 }}
       className="group glass relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/40 hover:glow-gold"
     >
-      <ProjectCardImage project={project} />
+      <ProjectCardImage project={project} priority={index < 3} />
 
       <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
         <header className="min-w-0">
@@ -90,7 +90,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       className="group glass grid grid-cols-1 gap-5 overflow-hidden rounded-3xl border border-border/60 p-4 transition-all duration-300 hover:border-gold/40 sm:grid-cols-[220px_minmax(0,1fr)] sm:items-center"
     >
       <div className="overflow-hidden rounded-2xl">
-        <ProjectCardImage project={project} compact />
+        <ProjectCardImage project={project} compact priority={index < 2} />
       </div>
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">

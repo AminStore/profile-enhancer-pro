@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Play, Download } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import heroIso from "@/assets/hero-iso.png";
+import heroIso from "@/assets/hero-iso.webp";
 
 const marqueeItems = [
   "Multi-vendor",
@@ -100,6 +100,10 @@ export function Hero() {
             alt="Isometric illustration of a marketplace workspace built from 3D letters"
             width={1200}
             height={1104}
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            draggable={false}
             className="mx-auto w-full max-w-2xl animate-float drop-shadow-2xl"
           />
         </motion.div>
