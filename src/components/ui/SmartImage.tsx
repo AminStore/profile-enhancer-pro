@@ -39,7 +39,7 @@ export function SmartImage({
   const resolved = resolveImage(src);
   const imgRef = useRef<HTMLImageElement>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
-    resolved ? "loading" : "error"
+    resolved ? "loading" : "error",
   );
 
   // Images restored from cache can finish before React attaches onLoad.
@@ -48,8 +48,7 @@ export function SmartImage({
     if (node?.complete && node.naturalWidth > 0) setStatus("ready");
   }, [resolved?.src]);
 
-  const gradient =
-    fallbackStyle || "linear-gradient(135deg, oklch(0.6 0.18 30), oklch(0.45 0.12 320))";
+  const gradient = fallbackStyle || "var(--gradient-media)";
 
   return (
     <div className={cn("relative overflow-hidden bg-secondary/40", className)}>
@@ -59,13 +58,17 @@ export function SmartImage({
         className={cn(
           "absolute inset-0 transition-opacity duration-500",
           status === "ready" ? "opacity-0" : "opacity-100",
-          status === "loading" && "skeleton-shimmer"
+          status === "loading" && "skeleton-shimmer",
         )}
         style={status === "error" ? { background: gradient } : undefined}
       />
 
       {resolved && status !== "error" && (
-        <img
+        <picture>
+          {resolved.avifSrcSet && (
+            <source type="image/avif" srcSet={resolved.avifSrcSet} sizes={sizes} />
+          )}
+          <img
           ref={imgRef}
           src={resolved.src}
           srcSet={resolved.srcSet}
@@ -82,9 +85,10 @@ export function SmartImage({
           className={cn(
             "size-full object-cover transition-opacity duration-500",
             status === "ready" ? "opacity-100" : "opacity-0",
-            imgClassName
+            imgClassName,
           )}
-        />
+          />
+        </picture>
       )}
     </div>
   );
