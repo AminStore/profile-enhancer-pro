@@ -854,6 +854,8 @@ html.theme-transition-reverse::view-transition-new(root) {
   .enter-up,
   .skeleton-shimmer,
   .pen-writing,
+  .type-in,
+  .type-mark::after,
   .app-preloader__art,
   .app-preloader__name,
   .app-preloader__role {
