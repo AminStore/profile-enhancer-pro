@@ -617,11 +617,24 @@
     overflow-wrap: break-word;
   }
 
+  /* Every heading level inherits the display face + optical defaults so a
+     component never has to restate `font-display` on an h1..h6. Size, weight
+     and case come from the `type-*` ramp (utilities layer beats this). */
   h1,
   h2,
-  h3 {
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
+    font-weight: 700;
     letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
   }
 
   /* ---------------------------------------------------------------
