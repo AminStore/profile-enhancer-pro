@@ -12,6 +12,9 @@
 
 /** Bases that have -640/-1280 WebP variants on disk. */
 const RESPONSIVE_BASES = new Set([
+  "/api/Marketing-Mvc",
+  "/api/e-commerce-api",
+  "/api/market-api",
   "/projects/angular/luxelle-landing",
   "/projects/angular/zyro-electric",
   "/projects/microservices/Inventory",
@@ -29,9 +32,11 @@ const RESPONSIVE_BASES = new Set([
   "/projects/react/ohanna",
 ]);
 
-export interface ResolvedImage {
+interface ResolvedImage {
   src: string;
   srcSet?: string;
+  /** AVIF variants (~30% smaller than the WebP set) for <picture> sources. */
+  avifSrcSet?: string;
 }
 
 const stripExtension = (path: string) => path.replace(/\.(png|jpe?g|webp|avif)$/i, "");
@@ -44,6 +49,7 @@ export function resolveImage(path: string | undefined): ResolvedImage | null {
     return {
       src: `${base}-1280.webp`,
       srcSet: `${base}-640.webp 640w, ${base}-1280.webp 1280w`,
+      avifSrcSet: `${base}-640.avif 640w, ${base}-1280.avif 1280w`,
     };
   }
 
