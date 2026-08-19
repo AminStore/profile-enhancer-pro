@@ -405,6 +405,40 @@
   animation-delay: var(--type-delay, 0s);
 }
 
+/* Stagger steps for stacked headings/lines — no inline style objects needed. */
+@utility type-delay-1 {
+  --type-delay: 0.08s;
+}
+@utility type-delay-2 {
+  --type-delay: 0.16s;
+}
+@utility type-delay-3 {
+  --type-delay: 0.24s;
+}
+@utility type-delay-4 {
+  --type-delay: 0.32s;
+}
+
+/* Accent word inside a heading: the gold ink-swipe underline draws on reveal. */
+@utility type-mark {
+  position: relative;
+  color: var(--accent);
+  white-space: nowrap;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0.06em;
+    height: 0.08em;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 55%, transparent);
+    transform-origin: left center;
+    animation: mark-swipe 0.7s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+
+
 
 @utility grid-bg {
   background-image: radial-gradient(
