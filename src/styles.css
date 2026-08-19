@@ -140,6 +140,20 @@
   }
 }
 
+/* Ink-swipe underline drawn under an accented heading word (`type-mark`). */
+@keyframes mark-swipe {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+
+
 /* Scroll reveal (see components/ui/Reveal.tsx) — CSS only, no JS per frame. */
 .reveal {
   opacity: 0;
